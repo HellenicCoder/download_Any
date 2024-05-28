@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="d.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Download Any YouTube Video</title>
+</head>
+<body>
+    <form action="#">
+    <header>Download Any YouTube Video</header>
+    <div class="url-input">
+        <span class="title">Paste Video Url</span>
+        <div class="field">
+            <input type="text" placeholder="https://www.youtube.com/watch?v=lqwD2ivIbM" required>
+            <input class="hidden-input" type="hidden" >
+            <div class="bottom-line"></div>
+        </div>
+    </div>
+    <div class="preview-area">
+        <img class="thumbnail" src="" alt="thumbnail">
+        <i class="fas fa-cloud-download-alt"></i>
+        <span>Paste Video url to see preview</span>
+    </div>
+    <button class="download-btn" type="submit">Download Thumbnail</button>
+</form>
+    <script>
+        const urlField = document.querySelector(".field input"),
+        previewArea = document.querySelector(".preview-area"),
+        imgTag = previewArea.querySelector(".thumbnail"),
+        hiddenInput = document.querySelector(".hidden-input");
+
+        urlField.onkeyup = () => {
+            let imgUrl = urlField.value;
+            previewArea.classList.add("active");
+
+            //  https://youtube.com/watch?v=lqwD2ivIbM example of video url lqwD2ivIbM
+            
+            if(imgUrl.indexOf("https://www.youtube.com/watch?v=") != -1){
+                let vidId = imgUrl.split("v=")[1].substring(0, 11);
+                let ytThumbnail = `https://img.youtube.com/vi/${vidId}/maxresdefault.jpg`;
+                imgTag.src = ytThumbnail;
+            }else if(imgUrl.indexOf("https://youtube.be/") != -1){
+                let vidId = imgUrl.split("be/")[1].substring(0, 11);
+                let ytThumbnail = `https://img.youtube.com/vi/${vidId}/maxresdefault.jpg`;
+                imgTag.src = ytThumbnail;
+            } else if(imgUrl.match(/\.(jbe?g|gif|bmp|webp)$/i)){
+                imgTag.src = imgUrl
+            } else{
+                imgTag.src = "";
+                previewArea.classList.remove("active");
+            }
+            hiddenInput.value = imgTag.src ;
+        }
+
+    </script>
+</body>
+</html>
